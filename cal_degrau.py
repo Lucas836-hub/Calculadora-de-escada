@@ -2,88 +2,182 @@
 # github : https://github.com/Lucas836-hub/
 # instagram : @lucas_git
 
-# Calculadora de degraus v0.3
+# Calculadora de degraus v0.4
 import os
 import math
 import turtle
 class main():
     def __init__(self):
 
-        self.titulo("CALCULADORA DE DEGRAIS")
-        print("Olá, seja bem vindo\nvamos ajuda-lo a saber sobre seus degrais\n")
-        print("Digite o comprimendo da escada")
-        c=self.valor()
-        print("\nDigite a altura da escada")
-        a=self.valor()
-        ang=(a/c)
-        #print(ang)
-        tabela_final=self.calc_ang(ang,3)
-
-        print("\nO que você quer descobrir ?")
-        print("\nDigite 1 - Para a altura\n       2 - Para o comprimento ")
-        r=self.imput(2)
+        print("Olá, seja bem vindo\nvamos ajuda-lo a calcular sua escada\n")
+        print("Antes Digite : 1 - para calcular o comprimento ideal para sua escada\n               2 - para calcular os degrais")
+        r = self.imput(2)
         self.limpar()
-        q_degrau=0
-        comprimento_degrau=0
-        altura_degrau=0
-        if r == 0:
-            print("Digite o tamanho do degrau (em cm)")
-            tam=self.valor()
-            comprimento_degrau=tam
-            tam=tam/100
-
+        if r ==0:
             self.limpar()
-            self.titulo("RESULTADO FINAL")
-            print("A escada vai ter :")
-            q_degrau=int(c//tam)
-            hj = tabela_final[3] * tam
-            altura_degrau = hj * 100
-            print(f"{q_degrau} degrais")
-            print(f"\nCom sobra de comprimento de {self.numb_valor((c /tam)-(c // tam))} cm")
-            print(f"Com sobra de altura de {self.numb_valor((a / hj) - (a // hj))} cm")
+            self.titulo("CALCULADORA DA ESCADA")
+            print("Olá, seja bem vindo\nvamos ajuda-lo a calcular sua escada\n")
+            print("\nDigite a altura da escada")
+            a = self.valor()
+            print("Digite o comprimendo do degrau em cm")
+            comprimento_degrau = self.valor()/100
+            print("Digite a altura do degrau em cm")
+            altura_degrau = self.valor()/100
+            print("Digite o comprimendo maximo livre em metros para a escada\n se não tiver um tamanha maximo digite 0")
+            cm = self.valor()
 
-            print(f"\nCom comprimento {self.numb_valor(tam*100)} cm")
-            print(f"Degrais com altura de {self.numb_valor(altura_degrau)}cm")
+            ts=(a/altura_degrau)*comprimento_degrau
+            if cm == 0 or ts <= cm:
+                self.limpar()
 
-            print(f"\nA rampa vai ter um comprimento de {self.numb_valor(math.sqrt((c**2+a**2)))} m")
-            print(f"O ângulo de inclinação da rampa é de {self.numb_valor(tabela_final[0])}º graus")
-            pcl=((a-2)/hj)*tam
+                c=(a/altura_degrau)*comprimento_degrau
+                ang=a/c
+                tabela_final = self.calc_ang(ang, 3)
 
-            print(f"\nA distancia para ter uma altura livre de 2 m do teto a escada á : {self.numb_valor(pcl)}m")
-            pcl = ((a - 1.8) / hj) * tam
-            print(f"A distancia para ter uma altura livre de 1,80 m do teto a escada á : {self.numb_valor(pcl)}m")
+                self.titulo("RESULTADO FINAL")
+                print("A escada vai ter :")
+                q_degrau = int(a // altura_degrau)
+                print(f"{q_degrau} degrais")
+                print(f"\nCom sobra de altura de {self.numb_valor((a / altura_degrau) - (a // altura_degrau))} cm")
+                print(f"Com sobra de comprimento de {self.numb_valor((c / comprimento_degrau) - (c // comprimento_degrau))} cm")
 
-        else:
-            print("Digite a altura do degrau (em cm)")
-            tam = self.valor()
-            altura_degrau=tam
-            tam = tam / 100
+                print(f"\nDegrais Com altura {self.numb_valor(altura_degrau*100)} cm")
+                print(f"Degrais com comprimento de {self.numb_valor(comprimento_degrau*100)} cm")
 
+                print(f"\nA rampa vai ter um comprimento de {self.numb_valor(math.sqrt((c ** 2 + a ** 2)))} m")
+                print(f"O ângulo de inclinação da rampa é de {tabela_final[0]}º graus")
+
+                pcl = ((a - 2) / altura_degrau) * comprimento_degrau
+                print(f"\nA distancia para ter uma altura livre de 2 m do teto a escada á : {self.numb_valor(pcl)}m")
+                pcl = ((a - 1.8) / altura_degrau) * comprimento_degrau
+                print(f"A distancia para ter uma altura livre de 1,80 m do teto a escada á : {self.numb_valor(pcl)}m")
+
+            else:
+                self.titulo("\033[31mATENÇÃO EM DESENVOLVIMENTO")
+                c = cm
+                a1=altura_degrau*(cm//  comprimento_degrau) #
+                a2=a-a1
+                ang = a1 / c
+                c2=(a2/altura_degrau)*comprimento_degrau
+                ang2=a2/c2
+                tabela_final = self.calc_ang(ang, 3)
+                tabela_final2 = self.calc_ang(ang2, 3)
+
+                self.titulo("RESULTADO FINAL")
+                print("A escada vai ter :")
+                q_degrau = int(c // comprimento_degrau)+(c2 // comprimento_degrau)
+                print(f"{q_degrau} degrais")
+                print(f"ou {q_degrau+1} degrais caso tenha um degrau no meio do patamar cental")
+
+                print(f"\nCom sobra de altura de {self.numb_valor((a / altura_degrau) - (a // altura_degrau))} cm")
+                print(f"Com sobra de comprimento de {self.numb_valor((c / comprimento_degrau) - (c // comprimento_degrau))} cm")
+
+                print(f"\nCom altura {self.numb_valor(altura_degrau*100)} cm")
+                print(f"Degrais com comprimento de {self.numb_valor(comprimento_degrau*100) }cm")
+
+                print(f"\nA primeira rampa vai ter um comprimento de {self.numb_valor(math.sqrt((c2 ** 2 + a2 ** 2)))} m")
+                print(f"O ângulo de inclinação da rampa é de {tabela_final2[0]}º graus")
+                print(f"\nA segunda rampa vai ter um comprimento de {self.numb_valor(math.sqrt((c ** 2 + a1 ** 2)))} m")
+                print(f"O ângulo de inclinação da rampa é de {tabela_final[0]}º graus")
+
+                pcl = ((a - 2) / altura_degrau) * comprimento_degrau
+                print(f"\nA distancia para ter uma altura livre de 2 m do teto a escada á : {self.numb_valor(pcl)}m")
+                pcl = ((a - 1.8) / altura_degrau) * comprimento_degrau
+                print(f"A distancia para ter uma altura livre de 1,80 m do teto a escada á : {self.numb_valor(pcl)}m")
+
+            altura_degrau*=100
+            comprimento_degrau*=100
+            print(f"\nMedidas da Escada= {self.numb_valor(c)}m x {self.numb_valor(a)}m")
+            print(f"Medidas do Degrau= {self.numb_valor(comprimento_degrau)}cm x {self.numb_valor(altura_degrau)}cm\n")
+            self.titulo("FINISH")
+
+
+        if r ==1:
             self.limpar()
-            self.titulo("RESULTADO FINAL")
-            print("A escada vai ter :")
-            q_degrau=int(a // tam)
-            hj = tam/tabela_final[3]
-            comprimento_degrau=hj*100
-            print(f"{q_degrau} degrais")
-            print(f"\nCom sobra de altura de {self.numb_valor((a / tam) - (a // tam))} cm")
-            print(f"Com sobra de comprimento de {self.numb_valor((c / hj) - (c // hj))} cm")
+            self.titulo("CALCULADORA DE DEGRAIS")
+            print("Olá, seja bem vindo\nvamos ajuda-lo a saber sobre seus degrais\n")
+            print("Digite o comprimendo da escada")
+            c=self.valor()
+            print("\nDigite a altura da escada")
+            a=self.valor()
+            ang=(a/c)
+            #print(ang)
+            tabela_final=self.calc_ang(ang,3)
 
-            print(f"\nCom altura {self.numb_valor(tam * 100)} cm")
-            print(f"Degrais com comprimento de {self.numb_valor(hj*100)}cm")
+            print("\nO que você quer descobrir ?")
+            print("\nDigite 1 - Para a altura\n       2 - Para o comprimento ")
+            r=self.imput(2)
+            self.limpar()
+            q_degrau=0
+            comprimento_degrau=0
+            altura_degrau=0
+            if r == 0:
+                print("Digite o tamanho do degrau (em cm)")
+                tam=self.valor()
+                comprimento_degrau=tam
+                tam=tam/100
 
-            print(f"\nA rampa vai ter um comprimento de {self.numb_valor(math.sqrt((c ** 2 + a ** 2)))} m")
-            print(f"O ângulo de inclinação da rampa é de {tabela_final[0]}º graus")
+                self.limpar()
+                self.titulo("RESULTADO FINAL")
+                print("A escada vai ter :")
+                q_degrau=int(c//tam)
+                hj = tabela_final[3] * tam
+                altura_degrau = hj * 100
+                print(f"{q_degrau} degrais")
+                print(f"\nCom sobra de comprimento de {self.numb_valor((c /tam)-(c // tam))} cm")
+                print(f"Com sobra de altura de {self.numb_valor((a / hj) - (a // hj))} cm")
 
-            pcl = ((a - 2) / tam) * hj
-            print(f"\nA distancia para ter uma altura livre de 2 m do teto a escada á : {self.numb_valor(pcl)}m")
-            pcl = ((a - 1.8) / tam) * hj
-            print(f"A distancia para ter uma altura livre de 1,80 m do teto a escada á : {self.numb_valor(pcl)}m")
+                print(f"\nCom comprimento {self.numb_valor(tam*100)} cm")
+                print(f"Degrais com altura de {self.numb_valor(altura_degrau)}cm")
 
-        print(f"\nMedidas da Escada= {c}m x {a}m")
-        print(f"Medidas do Degrau= {self.numb_valor(comprimento_degrau)}cm x {self.numb_valor(altura_degrau)}cm\n")
-        self.titulo("FINISH")
+                print(f"\nA rampa vai ter um comprimento de {self.numb_valor(math.sqrt((c**2+a**2)))} m")
+                print(f"O ângulo de inclinação da rampa é de {self.numb_valor(tabela_final[0])}º graus")
+                pcl=((a-2)/hj)*tam
 
+                print(f"\nA distancia para ter uma altura livre de 2 m do teto a escada á : {self.numb_valor(pcl)}m")
+                pcl = ((a - 1.8) / hj) * tam
+                print(f"A distancia para ter uma altura livre de 1,80 m do teto a escada á : {self.numb_valor(pcl)}m")
+
+            else:
+                print("Digite a altura do degrau (em cm)")
+                tam = self.valor()
+                altura_degrau=tam
+                tam = tam / 100
+
+                self.limpar()
+                self.titulo("RESULTADO FINAL")
+                print("A escada vai ter :")
+                q_degrau=int(a // tam)
+                hj = tam/tabela_final[3]
+                comprimento_degrau=hj*100
+                print(f"{q_degrau} degrais")
+                print(f"\nCom sobra de altura de {self.numb_valor((a / tam) - (a // tam))} cm")
+                print(f"Com sobra de comprimento de {self.numb_valor((c / hj) - (c // hj))} cm")
+
+                print(f"\nCom altura {self.numb_valor(tam * 100)} cm")
+                print(f"Degrais com comprimento de {self.numb_valor(hj*100)}cm")
+
+                print(f"\nA rampa vai ter um comprimento de {self.numb_valor(math.sqrt((c ** 2 + a ** 2)))} m")
+                print(f"O ângulo de inclinação da rampa é de {tabela_final[0]}º graus")
+
+                pcl = ((a - 2) / tam) * hj
+                print(f"\nA distancia para ter uma altura livre de 2 m do teto a escada á : {self.numb_valor(pcl)}m")
+                pcl = ((a - 1.8) / tam) * hj
+                print(f"A distancia para ter uma altura livre de 1,80 m do teto a escada á : {self.numb_valor(pcl)}m")
+
+            print(f"\nMedidas da Escada= {c}m x {a}m")
+            print(f"Medidas do Degrau= {self.numb_valor(comprimento_degrau)}cm x {self.numb_valor(altura_degrau)}cm\n")
+            self.titulo("FINISH")
+
+        #print(f"Você quer ver os calculos ?")
+        #print("\nDigite 1 - Para a Sim\n       2 - Para Não ")
+        #r = self.imput(2)
+        #if r == 0:
+        #    self.titulo("CALCULOS")
+        #    print('\033[34m Angulo de inclinação\n')
+        #    print(f"angulo = valor da tg = altura/comprimento ")
+
+        # GRAFICO DAS ESCADAS
         print(f"Você quer ver o desenho da escada ?")
         print("\nDigite 1 - Para a Sim\n       2 - Para Não ")
         r = self.imput(2)
@@ -91,26 +185,30 @@ class main():
             l1 = []
             # Fazendo os degrais
             comprimento_matriz = -310 + comprimento_degrau
-            altura_matriz = 0 - altura_degrau
+            altura_matriz = (0 - altura_degrau)+250
             #print(f"c+a {comprimento_degrau} + {altura_degrau}  = {comprimento_matriz} + {altura_matriz}")
             # Fazendo o triangulo
             #altura
-            l1.append([-310,0])
+            l1.append([-310,250])
             #l1.append([-300,-(q_degrau)*altura_degrau])
-            l1.append([-310, -a*100])
+            l1.append([-310, (-a*100)+250])
             #comprimento
             #l1.append([-300+(comprimento_degrau*(q_degrau)),-(q_degrau)*altura_degrau])
-            l1.append([-310 + c*100, -a*100])
-            l1.append([-310,0])
+            l1.append([-310 + c*100, (-a*100)+250])
+            l1.append([-310,250])
 
             # montando a escada
+            #print("vou montar os degrais")
             comprimento_matriz -= comprimento_degrau
             altura_matriz += altura_degrau
+            #print(f"vai ter {q_degrau} degrais")
             for gh in range(0,q_degrau):
+                #print("estou montando")
                 comprimento_matriz+=comprimento_degrau
                 l1.append([comprimento_matriz, altura_matriz])
                 altura_matriz-=altura_degrau
                 l1.append([comprimento_matriz,altura_matriz])
+            #print("terminei")
 
             self.drawseg(l1)
             turtle.mainloop()
