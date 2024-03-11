@@ -1,4 +1,4 @@
-# Calculadora de Escada
+# <div align="center"> *Calculadora de Escada* </div>
 Este é um script para fazer calculos de escadas, de modo a tentar manter degrais agradavéis á subida 
 
 <div align="center">
@@ -8,6 +8,19 @@ Este é um script para fazer calculos de escadas, de modo a tentar manter degrai
 <div align="center">
 <img src="https://github.com/Lucas836-hub/Calculadora-de-escada/assets/70550900/bfff513a-98ad-4964-acd4-f5e486e500e8" height="550px" />
 </div>
+
+
+## INSTALAÇÃO 
+
+     git clone https://github.com/Lucas836-hub/Calculadora-de-escada
+     
+## Requerimentos
+
+     python3 -m pip install -r requirements.txt
+     
+## Execução
+
+     python3 cal_degrau.py 
 
 ## futuras atualizações
 
