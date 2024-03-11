@@ -12,6 +12,7 @@ class main():
         print("Olá, seja bem vindo\nvamos ajuda-lo a calcular sua escada\n")
         print("Antes Digite : 1 - para calcular o comprimento ideal para sua escada\n               2 - para calcular os degrais")
         r = self.imput(2)
+        escada_simples=True
         self.limpar()
         if r ==0:
             self.limpar()
@@ -59,9 +60,12 @@ class main():
                 a2=a-a1
                 ang = a1 / c
                 c2=(a2/altura_degrau)*comprimento_degrau
+                print(f"c1 c2 {c}  {c2}")
+                print(f"a1 a2 {a}  {a1}  {a2}")
                 ang2=a2/c2
                 tabela_final = self.calc_ang(ang, 3)
                 tabela_final2 = self.calc_ang(ang2, 3)
+                escada_simples=False
 
                 self.titulo("RESULTADO FINAL")
                 print("A escada vai ter :")
@@ -181,40 +185,117 @@ class main():
         print(f"Você quer ver o desenho da escada ?")
         print("\nDigite 1 - Para a Sim\n       2 - Para Não ")
         r = self.imput(2)
+        
         if r==0:
-            l1 = []
-            # Fazendo os degrais
-            comprimento_matriz = -310 + comprimento_degrau
-            altura_matriz = (0 - altura_degrau)+250
-            #print(f"c+a {comprimento_degrau} + {altura_degrau}  = {comprimento_matriz} + {altura_matriz}")
-            # Fazendo o triangulo
-            #altura
-            l1.append([-310,250])
-            #l1.append([-300,-(q_degrau)*altura_degrau])
-            l1.append([-310, (-a*100)+250])
-            #comprimento
-            #l1.append([-300+(comprimento_degrau*(q_degrau)),-(q_degrau)*altura_degrau])
-            l1.append([-310 + c*100, (-a*100)+250])
-            l1.append([-310,250])
+            if escada_simples:
+                l1 = []
+                # Fazendo os degrais
+                comprimento_matriz = -310 + comprimento_degrau
+                altura_matriz = (0 - altura_degrau)+250
+                #print(f"c+a {comprimento_degrau} + {altura_degrau}  = {comprimento_matriz} + {altura_matriz}")
+                # Fazendo o triangulo
+                #altura
+                l1.append([-310,250])
+                #l1.append([-300,-(q_degrau)*altura_degrau])
+                l1.append([-310, (-a*100)+250])
+                #comprimento
+                #l1.append([-300+(comprimento_degrau*(q_degrau)),-(q_degrau)*altura_degrau])
+                l1.append([-310 + c*100, (-a*100)+250])
+                l1.append([-310,250])
 
-            # montando a escada
-            #print("vou montar os degrais")
-            comprimento_matriz -= comprimento_degrau
-            altura_matriz += altura_degrau
-            #print(f"vai ter {q_degrau} degrais")
-            for gh in range(0,q_degrau):
-                #print("estou montando")
-                comprimento_matriz+=comprimento_degrau
-                l1.append([comprimento_matriz, altura_matriz])
-                altura_matriz-=altura_degrau
-                l1.append([comprimento_matriz,altura_matriz])
-            #print("terminei")
+                # montando a escada
+                #print("vou montar os degrais")
+                comprimento_matriz -= comprimento_degrau
+                sombra_comprimento_matriz = comprimento_matriz
+                altura_matriz += altura_degrau
+                sombra_altura_matriz = altura_matriz
+                #print(f"vai ter {q_degrau} degrais")
+                p1=[]
+                p2=[]
+                q_degrau=int(q_degrau)
+                for gh in range(0,q_degrau):
+                    #print("estou montando")
+                    comprimento_matriz+=comprimento_degrau
+                    l1.append([comprimento_matriz, altura_matriz])
+                    p1.append([comprimento_matriz, altura_matriz])
+                    altura_matriz-=altura_degrau
+                    l1.append([comprimento_matriz,altura_matriz])
+                    p2.append([comprimento_matriz,altura_matriz])
+                #print("terminei")
+                # Montando sombra
+                l2=[[-310,250],[-310,260]]
+                for gh in range(0,q_degrau):
+                    #print("estou montando")
+                    sombra_comprimento_matriz+=comprimento_degrau
+                    l2.append([sombra_comprimento_matriz+10, sombra_altura_matriz+10])
+                    l2.append(p1[gh])
+                    l2.append(l2[-2])
+                    #print(f"l1 {l1[gh+4]} l2 {l2[gh]}  l2 {l2[gh-2]}")
+                    sombra_altura_matriz-=altura_degrau
+                    l2.append([sombra_comprimento_matriz+10,sombra_altura_matriz+10])
+                    l2.append(p2[gh])
+                    l2.append(l2[-2])
 
-            self.drawseg(l1)
-            turtle.mainloop()
+                self.drawseg(l1)
+                self.drawseg(l2)
+                turtle.mainloop()
+            else :
+                l1 = []
+                # Fazendo os degrais
+                comprimento_matriz = -310 + comprimento_degrau
+                altura_matriz = (0 - altura_degrau)+250
+                print(f"c+a {comprimento_degrau} + {altura_degrau}  = {comprimento_matriz} + {altura_matriz}")
+
+                # Fazendo o triangulo
+                #altura
+                l1.append([-310,250])
+                l1.append([-310, (-a*100)+250])
+                #comprimento
+                l1.append([-310 + c*100, (-a*100)+250])#reta e baixo
+                l1.append([-310 + c * 100, (-a2 * 100) + 250])#final da base
+                l1.append([-310 + (c-c2)* 100, (-a2 * 100) + 250])#feixando a base
+                l1.append([-310,250])
+
+                # montando a escada
+                print("vou montar os degrais")
+                comprimento_matriz -= comprimento_degrau
+                sombra_comprimento_matriz = comprimento_matriz
+                altura_matriz += altura_degrau
+                sombra_altura_matriz = altura_matriz
+                print(f"vai ter {q_degrau} degrais")
+                p1=[]
+                p2=[]
+                q_degrau = int(q_degrau)
+                for gh in range(0,q_degrau):
+                    print("estou montando")
+                    comprimento_matriz+=comprimento_degrau
+                    l1.append([comprimento_matriz, altura_matriz])
+                    p1.append([comprimento_matriz, altura_matriz])
+                    altura_matriz-=altura_degrau
+                    l1.append([comprimento_matriz,altura_matriz])
+                    p2.append([comprimento_matriz,altura_matriz])
+                print("terminei")
+                # Montando sombra
+                l2=[[-310,250],[-310,260]]
+                for gh in range(0,q_degrau):
+                    print("estou montando")
+                    sombra_comprimento_matriz+=comprimento_degrau
+                    l2.append([sombra_comprimento_matriz+10, sombra_altura_matriz+10])
+                    l2.append(p1[gh])
+                    l2.append(l2[-2])
+                    print(f"l1 {l1[gh+4]} l2 {l2[gh]}  l2 {l2[gh-2]}")
+                    sombra_altura_matriz-=altura_degrau
+                    l2.append([sombra_comprimento_matriz+10,sombra_altura_matriz+10])
+                    l2.append(p2[gh])
+                    l2.append(l2[-2])
+
+                self.drawseg(l1)
+                self.drawseg(l2)
+                turtle.mainloop()
 
     def drawseg(self,l):
         turtle.pu()
+        #turtle.color("light green")
         turtle.goto(l[0][0], l[0][1])
         turtle.pd()
         for a, b in l[1:]:
