@@ -2,7 +2,7 @@
 # github : https://github.com/Lucas836-hub/
 # instagram : @lucas_git
 
-# Calculadora de degraus v0.4
+# Calculadora de degraus v0.4.1
 import os
 import math
 import turtle
@@ -70,6 +70,8 @@ class main():
                 self.titulo("RESULTADO FINAL")
                 print("A escada vai ter :")
                 q_degrau = int(c // comprimento_degrau)+(c2 // comprimento_degrau)
+                q_degrau_inferior = int(c // comprimento_degrau)
+                q_degrau_superior= int(c2 // comprimento_degrau)
                 print(f"{q_degrau} degrais")
                 print(f"ou {q_degrau+1} degrais caso tenha um degrau no meio do patamar cental")
 
@@ -251,51 +253,100 @@ class main():
                 l1.append([-310,250])
                 l1.append([-310, (-a*100)+250])
                 #comprimento
-                l1.append([-310 + c*100, (-a*100)+250])#reta e baixo
-                l1.append([-310 + c * 100, (-a2 * 100) + 250])#final da base
-                l1.append([-310 + (c-c2)* 100, (-a2 * 100) + 250])#feixando a base
+                l1.append([-310 + (1+c2)*100, (-a*100)+250])#reta de baixo
+                l1.append([-310 + (1+c2) * 100, (-a2 * 100) + 250])#sobe
+                l1.append([-310 + (c2)* 100, (-a2 * 100) + 250])#feixando a base
+                # TESTE LINHA
+                l1.append([-310 + (c2) * 100, (-a * 100) + 250])  # desce
+                l1.append([-310 + (c2) * 100, (-a2 * 100) + 250])  # sobe
+
                 l1.append([-310,250])
 
                 # montando a escada
-                print("vou montar os degrais")
+                #print("vou montar os degrais")
                 comprimento_matriz -= comprimento_degrau
                 sombra_comprimento_matriz = comprimento_matriz
                 altura_matriz += altura_degrau
                 sombra_altura_matriz = altura_matriz
-                print(f"vai ter {q_degrau} degrais")
+                #print(f"vai ter {q_degrau} degrais")
                 p1=[]
                 p2=[]
-                q_degrau = int(q_degrau)
+                q_degrau = int(q_degrau_superior)
                 for gh in range(0,q_degrau):
-                    print("estou montando")
+                    #print("estou montando")
                     comprimento_matriz+=comprimento_degrau
                     l1.append([comprimento_matriz, altura_matriz])
                     p1.append([comprimento_matriz, altura_matriz])
                     altura_matriz-=altura_degrau
                     l1.append([comprimento_matriz,altura_matriz])
                     p2.append([comprimento_matriz,altura_matriz])
-                print("terminei")
+                #print("terminei")
                 # Montando sombra
                 l2=[[-310,250],[-310,260]]
                 for gh in range(0,q_degrau):
-                    print("estou montando")
+                    #print("estou montando")
                     sombra_comprimento_matriz+=comprimento_degrau
                     l2.append([sombra_comprimento_matriz+10, sombra_altura_matriz+10])
                     l2.append(p1[gh])
                     l2.append(l2[-2])
-                    print(f"l1 {l1[gh+4]} l2 {l2[gh]}  l2 {l2[gh-2]}")
+                    #print(f"l1 {l1[gh+4]} l2 {l2[gh]}  l2 {l2[gh-2]}")
                     sombra_altura_matriz-=altura_degrau
                     l2.append([sombra_comprimento_matriz+10,sombra_altura_matriz+10])
                     l2.append(p2[gh])
                     l2.append(l2[-2])
+                l2.append([-310 + (1+c2)*100,l2[-1][1]])
+                l2.append([-310 + (1 + c2) * 100, (-a2 * 100) + 250])  # sobe
+                # Parte 2 da Escada
+                l3=[]
+                l3.append([-310 + (c2) * 100, (-a2 * 100) + 250])  # sobe
+                hip_menor=math.sqrt((c2-c)**2+a1**2)
+                l3.append([-310 + (c2 * 100)+100, (-(a2+hip_menor )* 100) + 250])  # sobe
+                l3.append([-310 + (c2) * 100, (-a2 * 100) + 250])  # sobe
+
+                comprimento_matriz=-310 + (c2) * 100
+                altura_matriz= (-a2 * 100) + 250
+
+                comprimento_degrau= ((1)*100)/q_degrau_inferior
+                altura_degrau= (((-a2 * 100) + 250) - ((-(a2+hip_menor )* 100) + 250)) / q_degrau_inferior
+                q_degrau = int(q_degrau_inferior)
+                p1=[]
+                p2=[]
+                for gh in range(0, q_degrau):
+                    # print("estou montando")
+                    comprimento_matriz += comprimento_degrau
+                    l3.append([comprimento_matriz, altura_matriz])
+                    p1.append([comprimento_matriz, altura_matriz])
+                    altura_matriz -= altura_degrau
+                    l3.append([comprimento_matriz, altura_matriz])
+                    p2.append([comprimento_matriz, altura_matriz])
+
+                # Montando sombra
+                l4 = [[-310 + (1+c2) * 100, (-a2 * 100) + 250]]  # sobe
+                comprimento_matriz = -310 +( (1+c2) * 100)
+                sombra_comprimento_matriz = comprimento_matriz
+                sombra_altura_matriz= (-a2 * 100) + 250
+                for gh in range(0, q_degrau):
+                    # print("estou montando")
+                    sombra_comprimento_matriz += comprimento_degrau
+                    l4.append([sombra_comprimento_matriz, sombra_altura_matriz])
+                    l4.append(p1[gh])
+                    l4.append(l4[-2])
+                    # print(f"l1 {l1[gh+4]} l2 {l2[gh]}  l2 {l2[gh-2]}")
+                    sombra_altura_matriz -= altura_degrau
+                    l4.append([sombra_comprimento_matriz, sombra_altura_matriz ])
+                    l4.append(p2[gh])
+                    l4.append(l4[-2])
+
 
                 self.drawseg(l1)
                 self.drawseg(l2)
+                self.drawseg(l3)
+                self.drawseg(l4)
                 turtle.mainloop()
 
-    def drawseg(self,l):
+    def drawseg(self,l,c="black"):
         turtle.pu()
-        #turtle.color("light green")
+        turtle.color(c)
         turtle.goto(l[0][0], l[0][1])
         turtle.pd()
         for a, b in l[1:]:
