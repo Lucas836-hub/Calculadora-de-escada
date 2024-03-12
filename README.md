@@ -6,8 +6,9 @@ Este é um script para fazer calculos de escadas, de modo a tentar manter degrai
 </div>
 
 <div align="center">
-<img src="https://github.com/Lucas836-hub/Calculadora-de-escada/assets/70550900/bfff513a-98ad-4964-acd4-f5e486e500e8" height="550px" />
+<img src="https://github.com/Lucas836-hub/Calculadora-de-escada/assets/70550900/b298da64-abe9-4205-b81c-ecfd91a5ceaf" height="550px" />
 </div>
+
 
 
 ## INSTALAÇÃO 
